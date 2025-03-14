@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# This script removed the weird <U+FEFF> (hex digits BOM) at the start of csv files that are crashing my python script.
+# this shell script is run by typeing "source cleanup" at the commandline, with this script in the folder of interest
+
+for entry in `ls *csv`; do
+    echo $entry
+    awk '{ gsub(/\xef\xbb\xbf/,""); print }'  $entry > 'tempfile'
+    cp 'tempfile' $entry
+done
+rm 'tempfile'
